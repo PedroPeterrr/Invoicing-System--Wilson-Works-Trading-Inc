@@ -1,11 +1,25 @@
+import useAuthStore from '../store/useAuthStore'
+import { useNavigate } from 'react-router-dom'
 
-const Home = () => {
-    return (
-        <>
-            <h1 className="text-2xl font-bold text-center mt-10">Home Page</h1>
-            <p className="text-center mt-4">Welcome to the Invoicing System!</p>
-        </>
-    );
+export default function Home() {
+  const user = useAuthStore(s => s.user)
+  const logout = useAuthStore(s => s.logout)
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+  }
+
+  return (
+    <div className="p-6 min-h-screen bg-gray-50">
+      <h1 className="text-2xl mb-4">Welcome, {user.name}!</h1>
+      <button
+        onClick={handleLogout}
+        className="bg-red-500 text-white px-4 py-2 rounded"
+      >
+        Logout
+      </button>
+    </div>
+  )
 }
-
-export default Home;
