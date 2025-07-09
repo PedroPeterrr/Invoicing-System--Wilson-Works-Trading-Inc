@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useAuthStore from '../store/useAuthStore'
+import ReusableButton from '../components/Reusable/ReusableButton'
 
 const PASSWORD_REGEX = /^(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
 
 export default function Register() {
-  const register = useAuthStore(s => s.register)
+  const register = useAuthStore(state => state.register)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -64,16 +65,19 @@ export default function Register() {
           className="w-full border px-3 py-2 rounded mb-4"
           required
         />
-        <button type="submit" className="w-full bg-green-500 text-white py-2 rounded">
+        <ReusableButton 
+          type="submit" 
+          className="w-full bg-green-500 text-white py-2 rounded"
+        >
           Register
-        </button>
-        <button
-          type="button"
-          onClick={() => navigate('/login')}
+        </ReusableButton>
+
+        <ReusableButton
+          to="/login"
           className="mt-3 w-full border border-gray-300 py-2 rounded"
         >
           Back to Login
-        </button>
+        </ReusableButton>
       </form>
     </div>
   )

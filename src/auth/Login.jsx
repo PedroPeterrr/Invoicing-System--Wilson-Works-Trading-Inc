@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import useAuthStore from '../store/useAuthStore'
+import ReusableButton from '../components/Reusable/ReusableButton'
 
 export default function Login() {
-  const login = useAuthStore(s => s.login)
+  const login = useAuthStore(state => state.login)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -44,9 +45,13 @@ export default function Login() {
           className="w-full border px-3 py-2 rounded mb-4"
           required
         />
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">
+        <ReusableButton 
+          type="submit" 
+          className="w-full bg-blue-500 text-white py-2 rounded"
+        >
           Login
-        </button>
+        </ReusableButton>
+
         <p className="mt-4 text-center">
           Don’t have an account?{' '}
           <Link to="/register" className="text-blue-500">
