@@ -1,12 +1,76 @@
-# React + Vite
+# Invoicing System — Wilson Works Trading Inc.
+  This is an assessment project named Invoicing-System for Wilson Works Trading Inc.
+It is a lightweight web application that allows users to register, log in, create invoices, edit them, and view a list of all existing invoices.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  The system uses local storage to simulate a backend and includes basic UI components and state management using Zustand.
 
-Currently, two official plugins are available:
+# Tech Stack
+- React
+- Zustand (state management)
+- Tailwind CSS
+- Local Storage (for data persistence)
+- pnpm (package manager)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Naming Conventions
+ - `camelCase` - for folders, functions, variables, non-component files
+ - `PascalCase` - for component files
+ - `_camelCase` - for internal utility functions
+ - `UPPER_CASE` - constants 
+ - `lowercase or kebab-case` - CSS files
+   
+# Clone the repository
 
-## Expanding the ESLint configuration
+```bash
+https://github.com/PedroPeterrr/Invoicing-System--Wilson-Works-Trading-Inc.git
+cd Invoicing-System--Wilson-Works-Trading-Inc.git
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Install dependencies
+
+```bash
+pnpm install i
+```
+
+# Start the development server
+
+```bash
+pnpm dev
+```
+
+Open http://localhost:5173 in your browser to view the app.
+
+Make sure pnpm is installed globally. You can install it via:
+
+```bash
+npm install -g pnpm
+```
+
+# Features
+```text
+  User Authentication:
+    - Login
+    - Register
+    - Logout
+  Invoice Management:
+    - Create Invoice
+    - Edit Invoice
+    - View Invoice List
+  UI Components:
+    - Reusable buttons
+    - Popup modal for confirmations/actions
+```
+
+# Folder Structure Overview
+```
+src/
+├── api/                # Simulated service logic (localStorage)
+├── components/         # Reusable UI components
+├── pages/              # Route-based page components
+├── store/              # Zustand stores
+├── App.jsx             # Main app component
+└── main.jsx            # Entry point
+```
+
+# Notes
+- This is a frontend-only project with no backend/API.
+- All data is stored in the browser's local storage.
