@@ -11,7 +11,7 @@ export default function EmptyState({
 }) {
   return (
     <div className={`flex flex-col items-center justify-center py-20 text-center text-gray-500 ${className}`}>
-      {Icon && <Icon className="w-16 h-16 mb-4 color-var(--color-primary)" />}
+      {Icon && <Icon className="w-16 h-16 mb-4" style={{color: 'var(--color-primary)'}} />}
       {title && <h2 className="text-xl font-semibold mb-2">{title}</h2>}
       {description && <p className="mb-6">{description}</p>}
       {buttonText && (

@@ -29,7 +29,7 @@ export default function InvoiceFormPage() {
           const data = await getInvoiceById(id);
           if (data) setInvoice(data);
         } catch (error) {
-          setError(error.message || 'Failed to delete invoice')
+          setError(error.message || 'Failed to Fetch invoice')
           navigate('/invoices', { replace: true });
         }
       }
