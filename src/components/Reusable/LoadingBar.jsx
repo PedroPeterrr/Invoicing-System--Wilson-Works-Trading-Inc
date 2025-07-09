@@ -1,7 +1,7 @@
 
 export default function LoadingBar() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
       <div className="loading-circle" />
     </div>
   )

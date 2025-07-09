@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getInvoiceById, createInvoice, updateInvoice } from '../../api/invoiceService'
 import { useParams, useNavigate } from 'react-router-dom'
-import InvoiceForm from '../../components/invoice/InvoiceForm'
+
+import { 
+  LoadingBar,
+  InvoiceForm 
+} from '../../components'
 
 export default function InvoiceFormPage() {
   const { id } = useParams()   
   const navigate = useNavigate()
+  const [error, setError] = useState('')
 
   const [invoice, setInvoice] = useState({
     number: '',
@@ -14,13 +19,24 @@ export default function InvoiceFormPage() {
     products: []
   })
 
+    const [isSaving, setIsSaving] = useState(false)
+
+
   useEffect(() => {
-    if (id && id !== 'new') {
-      getInvoiceById(id).then(data => {
-        if (data) setInvoice(data)
-      })
+    async function fetchInvoice() {
+      if (id && id !== 'new') {
+        try {
+          const data = await getInvoiceById(id);
+          if (data) setInvoice(data);
+        } catch (error) {
+          setError(error.message || 'Failed to Fetch invoice')
+          navigate('/invoices', { replace: true });
+        }
+      }
     }
-  }, [id])
+
+    fetchInvoice();
+  }, [id, navigate]);
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -44,7 +60,7 @@ export default function InvoiceFormPage() {
         { 
             name: '',
             qty: 1, 
-            price: 0,
+            price: 1,
             id: Date.now().toString() + Math.random().toString(36).slice(2)
         }]
     }))
@@ -60,8 +76,11 @@ export default function InvoiceFormPage() {
   const subtotal = (p) => p.qty * p.price
   const total = invoice.products.reduce((sum, p) => sum + subtotal(p), 0)
 
-  function onSubmit(e) {
+ async function onSubmit(e) {
     e.preventDefault()
+    setError('')
+    setIsSaving(true)
+
     const payload = {
       ...invoice,
       total,
@@ -71,26 +90,37 @@ export default function InvoiceFormPage() {
       }))
     }
 
-    const action = id === 'new'
+    const apiCall = id === 'new'
       ? createInvoice(payload)
       : updateInvoice(id, payload)
 
-    action.then(() => {
-        navigate('/invoices', { replace: true })
-    })
+    const waitFive = new Promise(res => setTimeout(res, 3000))
+
+    try {
+      await Promise.all([apiCall, waitFive])
+      navigate('/invoices', { replace: true })
+    } catch (err) {
+      setError(err.message || 'Something went wrong')
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   return (
-    <InvoiceForm
-        invoice={invoice}
-        onChange={handleChange}
-        onProductChange={handleProductChange}
-        onAdd={addProduct}
-        onRemove={removeProduct}
-        onSubmit={onSubmit}
-        total={total}
-        subtotal={subtotal}
-        navigate={navigate}
-    />
+    <>
+      {isSaving && <LoadingBar />}
+      <InvoiceForm
+          invoice={invoice}
+          onChange={handleChange}
+          onProductChange={handleProductChange}
+          onAdd={addProduct}
+          onRemove={removeProduct}
+          onSubmit={onSubmit}
+          total={total}
+          subtotal={subtotal}
+          navigate={navigate}
+          error={error}
+      />
+    </>
   )
 }

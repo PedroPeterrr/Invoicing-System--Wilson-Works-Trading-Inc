@@ -21,40 +21,41 @@ export default function Login() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="main-container">
       <form
         autoComplete="off"
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow-md w-full max-w-sm"
+        className="bg-white p-6 rounded w-full max-w-sm border-2 border-border shadow-md"
       >
-        <h2 className="text-2xl mb-4 flex justify-center">Login</h2>
+        <h2 className="text-2xl font-bold mb-4 flex justify-center">Login</h2>
         {error && <p className="text-red-500 mb-2">{error}</p>}
-        <label className="block mb-1">Email</label>
+        <label className="form-label">Email</label>
         <input
           type="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
-          className="w-full border px-3 py-2 rounded mb-4"
+          className="input-field"
           required
         />
-        <label className="block mb-1">Password</label>
+        <label className="form-label">Password</label>
         <input
           type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
-          className="w-full border px-3 py-2 rounded mb-4"
+          className="input-field"
           required
         />
+
         <ReusableButton 
-          type="submit" 
-          className="w-full bg-blue-500 text-white py-2 rounded"
+          type="submit"
+          className="btn-secondary"
         >
           Login
         </ReusableButton>
 
         <p className="mt-4 text-center">
           Don’t have an account?{' '}
-          <Link to="/register" className="text-blue-500">
+          <Link to="/register" className="text-terniary hover:underline">
             Register
           </Link>
         </p>

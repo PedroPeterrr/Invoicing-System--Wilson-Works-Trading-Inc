@@ -29,18 +29,25 @@ export async function getAllInvoices() {
 
 export async function getInvoiceById(id) {
   const invoices  = await getAllInvoices()
+  const inv = invoices.find(i => i.id === id)
 
-    return invoices .find(inv => inv.id === id) || null
+  if (!inv) {
+    throw new Error(`Invoice ${id} not found`)
+  }
+   return inv
 }
 
 export async function createInvoice(invoice) {
   const invoices = await getAllInvoices()
 
+    if (invoices.some(inv => inv.number === invoice.number)) {
+      throw new Error(`Invoice number “${invoice.number}” already exists.`)
+    }
+
     const newInvoice = { 
         ...invoice, 
         id: Date.now().toString(),
     }
-
     invoices.push(newInvoice)
     _writeInvoices(invoices)
     return newInvoice
@@ -52,6 +59,13 @@ export async function updateInvoice(id, updates) {
 
     if (idx < 0) {
         throw new Error(`Invoice with id=${id} not found`)
+    }
+
+    if (
+      updates.number && 
+      invoices.some(inv => inv.number === updates.number && inv.id !== id)
+    ) {
+      throw new Error(`Invoice number “${updates.number}” already exists.`)
     }
 
     const updated = { ...invoices[idx], ...updates }

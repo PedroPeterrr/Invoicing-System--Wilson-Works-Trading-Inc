@@ -1,6 +1,6 @@
 import ReusableButton from '../../components/Reusable/ReusableButton';
 import ProductRow from '../../components/invoice/ProductRow';
-
+import LeftIcon from '../../assets/LeftIcon';
 export default function InvoiceForm({ 
     invoice, 
     onChange,
@@ -10,86 +10,135 @@ export default function InvoiceForm({
     onSubmit,
     navigate,
     total,
-    subtotal
+    subtotal,
+    error
 }) {
   return (
-    <form onSubmit={onSubmit}>
-       <nav aria-label="Form navigation">
-            <ReusableButton 
-                type="button"
-                onClick={() => navigate(-1)}
-            >
-                Back
-            </ReusableButton>
-        </nav>
+    <div className="main-container px-2 md:px-4 lg:px-8">
+        <div className="page-card">
+            <form onSubmit={onSubmit}>
+                {error && <p className="text-red-500 mb-2">{error}</p>}
+                <fieldset className="space-y-4">
 
-        <fieldset>
-            <legend>Invoice Details</legend>
+                    <legend className="flex items-center py-2 mb-4 text-lg font-semibold text-primary md:text-2xl">
+                        <ReusableButton 
+                            onClick={() => navigate(-1)}
+                            className='cursor-pointer'
+                        >
+                            <LeftIcon width="20px" height="20px" color="var(--color-primary)" />
+                        </ReusableButton>
+                        <span className="ml-2">Invoice Details</span>
+                    </legend>
 
-            <div>
-                <label htmlFor="invoice-number">Invoice Number</label>
-                <input
-                    id="invoice-number"
-                    name="number" 
-                    value={invoice.number}
-                    onChange={onChange} 
-                    required
-                />
-            </div>
-        
-            <div>
-                <label htmlFor="invoice-date">Date</label>
-                <input
-                    id="invoice-date"
-                    type="date" 
-                    name="date"
-                    value={invoice.date}
-                    onChange={onChange} 
-                    required
-                />
-            </div>
+                    <div className="field-row-invoice-form"> 
+                        <label htmlFor="invoice-number" className="field-label-invoice-form">
+                            Invoice #
+                            <span className="required-symbol">*</span>
+                        </label>
 
-            <div>
-                 <label htmlFor="invoice-customer">Customer</label>
-                <input
-                    id="invoice-customer"
-                    name="customer" 
-                    value={invoice.customer}
-                    onChange={onChange} 
-                    required
-                />
-            </div>
-        </fieldset>
+                        <input
+                            id="invoice-number"
+                            className="input-field"
+                            name="number" 
+                            value={invoice.number}
+                            onChange={onChange} 
+                            required
+                        />
+                    </div>
+                
+                    <div className="field-row-invoice-form">
+                        <label htmlFor="invoice-date" className="field-label-invoice-form">
+                            Date
+                            <span className="required-symbol">*</span>
+                        </label>
 
-        <section aria-labelledby="products-heading">
-            <h3 id="products-heading">Products</h3>
-            
-            {invoice.products.map((p, i) => (
-               <ProductRow
-                    key={p.id}
-                    product={p}
-                    index={i}
-                    onProductChange={onProductChange}
-                    onRemove={onRemove}
-                    subtotal={subtotal}
-                />
-            ))}
+                        <input
+                            id="invoice-date"
+                            className="input-field"
+                            type="date" 
+                            name="date"
+                            value={invoice.date}
+                            onChange={onChange} 
+                            required
+                        />
+                    </div>
 
-                <ReusableButton 
-                    onClick={onAdd}
-                >
-                    Add Product
-                </ReusableButton>
+                    <div className="field-row-invoice-form">
+                        <label htmlFor="invoice-customer" className="field-label-invoice-form">
+                            Customer
+                            <span className="required-symbol">*</span>
+                        </label>
+                        <input
+                            id="invoice-customer"
+                            className="input-field"
+                            name="customer" 
+                            value={invoice.customer}
+                            onChange={onChange} 
+                            required
+                        />
+                    </div>
+                </fieldset>
 
-            <h2>Total: {total.toFixed(2)}</h2>
-        </section>
-        
-        <ReusableButton 
-            type="submit"
-            disabled={invoice.products.length === 0}
-        > 
-            Save Invoice 
-        </ReusableButton>
-    </form>
+                <section aria-labelledby="products-heading" className="mt-4">
+                    <h2 className="section-heading-invoice-form">Products</h2>
+
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full text-sm border-collapse">
+                        <thead>
+                            <tr className="bg-secondary sticky top-0 z-10">
+                            <th className="table-header-list-page">Product Name</th>
+                            <th className="table-header-list-page">Quantity</th>
+                            <th className="table-header-list-page">Price</th>
+                            <th className="table-header-list-page">Sub Total</th>
+                            <th className="table-header-list-page"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {invoice.products.map((p, i) => (
+                            <ProductRow
+                                key={p.id}
+                                product={p}
+                                index={i}
+                                onProductChange={onProductChange}
+                                onRemove={onRemove}
+                                subtotal={subtotal}
+                            />
+                            ))}
+                        </tbody>
+                        </table>
+                    </div>
+
+                    <div className="section-actions-invoice-form">
+                        <ReusableButton 
+                            onClick={onAdd}
+                            className="btn-primary"
+                        >
+                            Add Product
+                        </ReusableButton>
+                    </div>
+                    
+                    <div className="mt-2 text-right font-medium">
+                        <span className="section-total-invoice-form">
+                            Total: {" "}
+                            {total.toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            })}
+                        </span>
+                    </div>
+                </section>
+
+                <div className="form-footer-invoice-form">
+                    <ReusableButton 
+                        type="submit"
+                        disabled={invoice.products.length === 0}
+                        className="btn-primary"
+                    > 
+                        Save Invoice 
+                    </ReusableButton>
+                </div>
+            </form>    
+        </div>
+    </div>
   )
 }
