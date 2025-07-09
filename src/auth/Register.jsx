@@ -32,49 +32,66 @@ export default function Register() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="main-container">
       <form
         autoComplete="off"
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow-md w-full max-w-sm"
+        className="form-card"
       >
-        <h2 className="text-2xl mb-4 flex justify-center">Register</h2>
+        <h2 className="text-2xl font-bold mb-4 flex justify-center">Register</h2>
         {error && <p className="text-red-500 mb-2">{error}</p>}
-        <label className="block mb-1">Name</label>
+
+        <label className="form-label">
+          Name
+          <span className="required-symbol">*</span>
+        </label>
+
         <input
           type="text"
           value={name}
           onChange={e => setName(e.target.value)}
-          className="w-full border px-3 py-2 rounded mb-4"
+          className="input-field"
           required
         />
-        <label className="block mb-1">Email</label>
+
+        <label className="form-label">
+          Email
+          <span className="required-symbol">*</span>
+        </label>
+
         <input
           type="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
-          className="w-full border px-3 py-2 rounded mb-4"
+          className="input-field"
           required
         />
-        <label className="block mb-1">Password</label>
+        
+        <label className="form-label">
+          Password
+          <span className="required-symbol">*</span>
+        </label>
+        
         <input
           type="password"
           autoComplete="new-password"
           value={password}
           onChange={e => setPassword(e.target.value)}
-          className="w-full border px-3 py-2 rounded mb-4"
+          className="input-field"
           required
         />
+
         <ReusableButton 
           type="submit" 
-          className="w-full bg-green-500 text-white py-2 rounded"
+          className="btn-secondary"
         >
           Register
         </ReusableButton>
 
         <ReusableButton
           to="/login"
-          className="mt-3 w-full border border-gray-300 py-2 rounded"
+            className="mt-3 w-full border border-terniary text-terniary py-2 rounded 
+            hover:bg-terniary/10 transition-colors cursor-pointer"
         >
           Back to Login
         </ReusableButton>

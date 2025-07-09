@@ -1,7 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 
 @theme {
-    --color-primary: red;
+    --color-primary: #a69383;
+    --color-secondary: #a69383;
+    --color-terniary: #729da6;
+
+    --color-warning: #a66d72;
+    --color-warning-dark: #8f4e58;
+    --color-border: #f2e4d8;
+
+    --font-inter: 'Inter', sans-serif;
+
+    --breakpoint-sm: 320px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+}
+
+
+
+body {
+    font-family: var(--font-inter);
 }
 
 @layer utilities {
@@ -16,19 +35,118 @@
   }
 }
 
-@layer base {
-    body {
-        @apply bg-gray-100 text-gray-900;
-    }
-}
-
 @layer components {
-    .title {
-        @apply text-2xl font-bold text-center mt-10;
+    .main-container {
+      @apply min-h-screen flex flex-col items-center justify-center bg-primary
+      px-3 md:px-4 lg:px-8;
+    }
+
+    .page-card {
+      @apply bg-white p-4 md:p-8 rounded-lg shadow w-full max-w-4xl overflow-hidden;
+    }
+    
+    .form-card {
+      @apply bg-white p-6 rounded w-full max-w-sm border-2 border-border shadow-md;
+    }
+    .form-label {
+      @apply block mb-1 font-medium;
     }
 
     .loading-circle {
-        @apply w-16 h-16 border-4 border-gray-200 rounded-full animate-spin
-        border-t-primary;
+      @apply w-16 h-16 border-4 border-gray-200 rounded-full animate-spin
+       border-t-primary;
     }
+
+    /* Invoice List Page */
+    .table-header-list-page{
+      @apply py-2 px-4 text-center font-medium whitespace-nowrap;
+    }
+
+    .table-details-list-page {
+      @apply py-2 px-4 text-center font-medium;
+    }
+
+    /* Invoice Form */
+    .field-label-invoice-form,
+    .field-label-product-row {
+      @apply  w-32 text-sm font-medium text-primary md:mb-1;
+    }
+
+    .input-field {
+      @apply block w-full border border-border rounded py-1 px-2 
+      focus:outline-none focus:ring-2 focus:ring-terniary;
+    }
+
+    .section-heading-invoice-form {
+      @apply text-lg font-semibold text-primary px-4 py-2 mb-4
+      md:text-2xl;
+    }
+
+    .field-row-invoice-form {
+      @apply flex flex-row items-center space-x-3;
+    }
+
+    .section-actions-invoice-form {
+      @apply flex flex-row justify-start items-center mt-1;
+    }
+
+    .section-total-invoice-form {
+      @apply text-lg font-semibold mt-4;
+    }
+
+    .form-footer-invoice-form {
+      @apply flex justify-end space-x-2 mt-6;
+    }
+
+    /* product-row layout */
+    .product-row-product-row  {
+      @apply grid md:grid-cols-1 grid-cols-4 gap-4 items-end mb-6;
+    }
+
+    .product-row-actions {
+      @apply flex items-center space-x-2 mt-2;
+    }
+
+    /* primary button style */
+    .btn-primary {
+      @apply bg-terniary hover:opacity-90 text-white 
+        md:px-4 px-2 py-2 
+        rounded transition-colors cursor-pointer;
+    }
+
+    /* handle disabled state */
+    .btn-primary:disabled {
+      @apply opacity-50 cursor-not-allowed;
+    }
+
+    .btn-secondary {
+      @apply w-full bg-secondary hover:bg-[#8b7864]
+     text-white mt-4 px-4 py-2 rounded transition-colors cursor-pointer;
+    }
+
+    .required-symbol {
+      @apply text-warning-dark ml-1;
+}
+}
+
+/* Firefox support */
+*{
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-white);
+}
+
+/* WebKit browsers (Chrome, Safari, Edge) */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-primary);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 4px;
+  border: 2px solid var(--color-primary);
 }
